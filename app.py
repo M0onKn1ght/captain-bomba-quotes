@@ -5,10 +5,10 @@ from azure.cosmos import CosmosClient
 
 app = Flask(__name__)
 
-# Pobieranie connection string ze zmiennej środowiskowej
+# Downloading connection string
 connection_string = os.environ.get('COSMOS_DB_CONNECTION_STRING')
 
-# Inicjalizacja klienta Cosmos DB
+# Inicializing Cosmos DB client
 client = CosmosClient.from_connection_string(connection_string)
 database = client.get_database_client('bomba-db')
 container = database.get_container_client('quotes')
@@ -16,7 +16,7 @@ container = database.get_container_client('quotes')
 @app.route('/')
 def home():
     try:
-        # Pobranie wszystkich cytatów z bazy
+        # Downloading all quotes form DB
         quotes = list(container.query_items(
             query="SELECT * FROM c",
             enable_cross_partition_query=True
